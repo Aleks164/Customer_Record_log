@@ -1,21 +1,5 @@
-import React, { SyntheticEvent, useState } from "react";
-import {
-  Grid,
-  Button,
-  Typography,
-  Paper,
-  Stack,
-  Box,
-  InputLabel,
-  FilledInput,
-  FormControl,
-  InputAdornment,
-  SwipeableDrawer,
-  useMediaQuery,
-  Drawer,
-  styled,
-} from "@mui/material";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import React, { useState } from "react";
+import { Stack, Box, SwipeableDrawer } from "@mui/material";
 import { ContactItem } from "./ContactItem";
 
 export const ContactList = () => {

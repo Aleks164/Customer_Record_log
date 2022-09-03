@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Box, Typography } from "@mui/material";
 import { daysOfWeak } from "./utiles/daysOfWeak";
 
@@ -15,6 +15,7 @@ export const Calendar = ({ firstDayOfWeak, lastDay }: CalendarParamType) => {
   const emptyWeakDays = Array(convertedDayOfWeak)
     .fill("")
     .map((_, index) => <div key={index + 32}></div>);
+
   return (
     <Box
       sx={{
