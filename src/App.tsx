@@ -7,6 +7,7 @@ import { daysOfWeak } from "./utiles/daysOfWeak";
 import { firstDayOfWeak } from "./utiles/firstDayOfWeak";
 import { lastDayOfMonth } from "./utiles/lastDayOfMonth";
 import { dataCreator } from "./utiles/dataCreator";
+import { monthRedactor } from "./utiles/monthRedactor";
 import { ContactList } from "./ContactList";
 
 export default function App() {
@@ -34,6 +35,13 @@ export default function App() {
   };
 
   const targetMonth = dataCreator(year, monthListRu.indexOf(month), 1);
+  const [open, setOpen] = useState(false);
+  const [mainList, setMainList] = useState({});
+  const [openedDay, setOpenedDay] = useState(0);
+  
+  const setMainListHandler = (key:string, value:string)=>{
+    const  newMainList = {...mainList, mainList[key]:value};
+  }
 
   return (
     <Paper sx={{ p: 1, minWidth: "max-content", backgroundColor: "gray" }}>
@@ -63,9 +71,19 @@ export default function App() {
           <Calendar
             firstDayOfWeak={daysOfWeak[firstDayOfWeak(targetMonth)]}
             lastDay={lastDayOfMonth(targetMonth)}
+            setOpen={setOpen}
+            setOpenedDay={setOpenedDay}
           />
         </Grid>
-        <ContactList />
+        <ContactList
+          open={open}
+          setOpen={setOpen}
+          mainList={mainList}
+          setMainList={setMainList}
+          fullDate={`${openedDay} ${monthRedactor(
+            monthListRu.indexOf(month)
+          )} ${year}`}
+        />
       </Grid>
     </Paper>
   );
