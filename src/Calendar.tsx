@@ -5,9 +5,15 @@ import { daysOfWeak } from "./utiles/daysOfWeak";
 export type CalendarParamType = {
   firstDayOfWeak: string;
   lastDay: number;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const Calendar = ({ firstDayOfWeak, lastDay }: CalendarParamType) => {
+export const Calendar = ({
+  firstDayOfWeak,
+  lastDay,
+  setOpen,
+  setOpenedDay,
+}: CalendarParamType) => {
   const convertedDayOfWeak =
     daysOfWeak.indexOf(firstDayOfWeak) === 0
       ? 6
@@ -42,7 +48,14 @@ export const Calendar = ({ firstDayOfWeak, lastDay }: CalendarParamType) => {
           .fill("")
           .map((_, index) =>
             index + 1 <= lastDay ? (
-              <Button key={index} variant="outlined">
+              <Button
+                key={index}
+                onClick={() => {
+                  setOpen(true);
+                  setOpenedDay(index + 1);
+                }}
+                variant="outlined"
+              >
                 {index + 1}
               </Button>
             ) : (
