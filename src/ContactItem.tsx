@@ -11,7 +11,7 @@ export const ContactItem = ({
   hour: number;
   minuts: string;
 }) => {
-  const key = fullDate + hour + minuts;
+  const key = `${fullDate} ${hour}${minuts}`;
   const defaultValue = mainList[key] ? mainList[key] : "";
   const [value, setValue] = useState(defaultValue);
 

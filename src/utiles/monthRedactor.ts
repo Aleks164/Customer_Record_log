@@ -1,6 +1,6 @@
 import { monthListRu } from "./monthListRu";
 
-export const monthRedacror = (index: number) => {
+export const monthRedactor = (index: number) => {
   switch (index) {
     case 2:
     case 7:

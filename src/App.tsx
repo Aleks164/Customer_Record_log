@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import { Paper, Grid, Typography, Divider } from "@mui/material";
 import { Calendar } from "./Calendar";
 import { MonthSelector } from "./MonthSelector";
@@ -38,13 +38,24 @@ export default function App() {
   const [open, setOpen] = useState(false);
   const [mainList, setMainList] = useState({});
   const [openedDay, setOpenedDay] = useState(0);
-  
-  const setMainListHandler = (key:string, value:string)=>{
-    const  newMainList = {...mainList, mainList[key]:value};
-  }
+  const timeoutId = useRef<NodeJS.Timeout>();
+  const lastKey = useRef<string>("");
 
+  const setMainListHandler = (key: string, value: string) => {
+    if (lastKey.current === key || !lastKey.current) {
+      clearTimeout(timeoutId.current);
+    }
+    timeoutId.current = setTimeout(() => {
+      lastKey.current = key;
+      const newMainList = { ...mainList, [key]: value };
+      console.log("newMainList", newMainList);
+      setMainList(newMainList);
+      console.log("newMainList2", newMainList);
+    }, 3500);
+  };
+  console.log(mainList);
   return (
-    <Paper sx={{ p: 1, minWidth: "max-content", backgroundColor: "gray" }}>
+    <Paper sx={{ p: 1, minWidth: "max-content", maxWidth: "800px" }}>
       <Grid
         container
         direction="column"
@@ -79,7 +90,7 @@ export default function App() {
           open={open}
           setOpen={setOpen}
           mainList={mainList}
-          setMainList={setMainList}
+          setMainList={setMainListHandler}
           fullDate={`${openedDay} ${monthRedactor(
             monthListRu.indexOf(month)
           )} ${year}`}

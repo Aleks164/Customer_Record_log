@@ -47,12 +47,14 @@ export const ContactList = ({
               setMainList={setMainList}
               hour={index + workDayBegining}
               minuts={":00"}
+              fullDate={fullDate}
             />
             <ContactItem
               mainList={mainList}
               setMainList={setMainList}
               hour={index + workDayBegining}
               minuts={":30"}
+              fullDate={fullDate}
             />
           </Box>
         ))}

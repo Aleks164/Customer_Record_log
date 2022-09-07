@@ -49,6 +49,7 @@ export const Calendar = ({
           .map((_, index) =>
             index + 1 <= lastDay ? (
               <Button
+                sx={{ height: "75px" }}
                 key={index}
                 onClick={() => {
                   setOpen(true);
