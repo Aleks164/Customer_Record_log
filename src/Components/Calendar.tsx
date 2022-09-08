@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Box, Typography } from "@mui/material";
-import { daysOfWeak } from "./utiles/daysOfWeak";
+import { daysOfWeak } from "../utiles/daysOfWeak";
 
 export type CalendarParamType = {
   firstDayOfWeak: string;
   lastDay: number;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenedDay: React.Dispatch<React.SetStateAction<number>>;
+  todayCheck: number | false;
 };
 
 export const Calendar = ({
@@ -15,7 +17,6 @@ export const Calendar = ({
   setOpen,
   setOpenedDay,
 }: CalendarParamType) => {
-  console.log("todayCheck", todayCheck);
   const convertedDayOfWeak =
     daysOfWeak.indexOf(firstDayOfWeak) === 0
       ? 6
@@ -57,7 +58,7 @@ export const Calendar = ({
               <Button
                 sx={{
                   height: "75px",
-                  border: `${todayCheck === index + 1 ? "2px solid red" : ""}`,
+                  border: `${todayCheck === index + 1 ? "4px solid red" : ""}`,
                   color: `${weekendCheck(index) ? "red" : ""}`,
                 }}
                 key={index}

@@ -1,5 +1,14 @@
 import React, { useState } from "react";
 import { FormControl, InputAdornment, Input } from "@mui/material";
+import { MainListType } from "./App";
+
+export type ContactItemParamType = {
+  hour: number;
+  minuts: string;
+  mainList: MainListType;
+  setMainList: (key: string, value: string) => void;
+  fullDate: string;
+};
 
 export const ContactItem = ({
   hour,
@@ -7,10 +16,7 @@ export const ContactItem = ({
   setMainList,
   fullDate,
   mainList,
-}: {
-  hour: number;
-  minuts: string;
-}) => {
+}: ContactItemParamType) => {
   const key = `${fullDate} ${hour}${minuts}`;
   const defaultValue = mainList[key] ? mainList[key] : "";
   const [value, setValue] = useState(defaultValue);
@@ -21,6 +27,7 @@ export const ContactItem = ({
         id={`item${hour + minuts}`}
         sx={{ fontSize: "30px" }}
         value={value}
+        multiline
         onChange={(e) => {
           setValue(e.target.value);
           setMainList(key, e.target.value);

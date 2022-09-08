@@ -9,10 +9,14 @@ import {
   Toolbar,
 } from "@mui/material";
 import { ContactItem } from "./ContactItem";
+import { MainListType } from "./App";
 
 export type ContactListParamType = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  mainList: MainListType;
+  setMainList: (key: string, value: string) => void;
+  fullDate: string;
 };
 
 export const ContactList = ({
@@ -32,7 +36,7 @@ export const ContactList = ({
     <SwipeableDrawer
       PaperProps={{
         sx: {
-          width: `${isSmallScreen ? "50%" : "100%"}`,
+          width: `${isSmallScreen ? "50%" : "80%"}`,
         },
       }}
       anchor="right"
