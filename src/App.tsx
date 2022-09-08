@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Paper, Grid, Typography, Divider } from "@mui/material";
 import { Calendar } from "./Calendar";
 import { MonthSelector } from "./MonthSelector";
@@ -18,6 +18,12 @@ export default function App() {
   const [month, setMonth] = useState(monthListRu[curMonth]);
   const [year, setYear] = useState(curYear);
 
+  const todayCheck = useMemo(() => {
+    if (monthListRu.indexOf(month) === curMonth && year === curYear)
+      return curDate.getDate();
+    return false;
+  }, [month, year, curDate]);
+
   const setMonthHandler = (nextMonth: string) => {
     setMonth((prevMonth) => {
       const monthIndex = monthListRu.indexOf(prevMonth);
@@ -36,24 +42,26 @@ export default function App() {
 
   const targetMonth = dataCreator(year, monthListRu.indexOf(month), 1);
   const [open, setOpen] = useState(false);
-  const [mainList, setMainList] = useState({});
   const [openedDay, setOpenedDay] = useState(0);
+  const [mainList, setMainList] = useState({});
   const timeoutId = useRef<NodeJS.Timeout>();
   const lastKey = useRef<string>("");
 
   const setMainListHandler = (key: string, value: string) => {
-    if (lastKey.current === key || !lastKey.current) {
+    if (lastKey.current === key) {
       clearTimeout(timeoutId.current);
     }
+    lastKey.current = key;
     timeoutId.current = setTimeout(() => {
-      lastKey.current = key;
-      const newMainList = { ...mainList, [key]: value };
+      const newMainList = { ...mainList };
+
+      newMainList[key] = value;
       console.log("newMainList", newMainList);
       setMainList(newMainList);
       console.log("newMainList2", newMainList);
-    }, 3500);
+    }, 1500);
   };
-  console.log(mainList);
+
   return (
     <Paper sx={{ p: 1, minWidth: "max-content", maxWidth: "800px" }}>
       <Grid
@@ -84,6 +92,7 @@ export default function App() {
             lastDay={lastDayOfMonth(targetMonth)}
             setOpen={setOpen}
             setOpenedDay={setOpenedDay}
+            todayCheck={todayCheck}
           />
         </Grid>
         <ContactList

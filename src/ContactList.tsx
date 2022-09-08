@@ -5,6 +5,8 @@ import {
   SwipeableDrawer,
   useMediaQuery,
   Typography,
+  AppBar,
+  Toolbar,
 } from "@mui/material";
 import { ContactItem } from "./ContactItem";
 
@@ -38,7 +40,12 @@ export const ContactList = ({
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
     >
-      <Typography variant="h4">{fullDate}</Typography>
+      <AppBar position="sticky">
+        <Toolbar>
+          <Typography variant="h4">{fullDate}</Typography>
+        </Toolbar>
+      </AppBar>
+
       <Stack>
         {lengthOfList.map((_, index) => (
           <Box key={`${index}:00`}>
