@@ -10,10 +10,12 @@ export type CalendarParamType = {
 
 export const Calendar = ({
   firstDayOfWeak,
+  todayCheck,
   lastDay,
   setOpen,
   setOpenedDay,
 }: CalendarParamType) => {
+  console.log("todayCheck", todayCheck);
   const convertedDayOfWeak =
     daysOfWeak.indexOf(firstDayOfWeak) === 0
       ? 6
@@ -21,6 +23,10 @@ export const Calendar = ({
   const emptyWeakDays = Array(convertedDayOfWeak)
     .fill("")
     .map((_, index) => <div key={index + 32}></div>);
+
+  const weekendCheck = (index: number) =>
+    (daysOfWeak.indexOf(firstDayOfWeak) + index + 1) % 7 === 0 ||
+    (daysOfWeak.indexOf(firstDayOfWeak) + index) % 7 === 0;
 
   return (
     <Box
@@ -49,7 +55,11 @@ export const Calendar = ({
           .map((_, index) =>
             index + 1 <= lastDay ? (
               <Button
-                sx={{ height: "75px" }}
+                sx={{
+                  height: "75px",
+                  border: `${todayCheck === index + 1 ? "2px solid red" : ""}`,
+                  color: `${weekendCheck(index) ? "red" : ""}`,
+                }}
                 key={index}
                 onClick={() => {
                   setOpen(true);
